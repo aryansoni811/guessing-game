@@ -34,24 +34,26 @@ function playGame(chosenNumber = null) {
   const askForGuess = () => {
     getInput("Enter your guess: ", (guess) => {
       all_guess.push(guess);
-      if (all_guess.length == 11) {
-        console.log("You are out of guesses.");
-        console.log("your guesses: ", all_guess);
-        exit(0);
-      }
       if (number == guess) {
-        console.log("you won");
+        console.log("Congrats! You guessed the correct number.");
         console.log(all_guess);
-        exit(0);
+        rl.close();
       } else if (number > guess) {
-        console.log("too low");
+        console.log("Your guess is lower than the chosen number.");
         askForGuess();
       } else if (number < guess) {
-        console.log("too high");
+        console.log("Your guess is higher than the chosen number.");
         askForGuess();
       } else {
         console.log("Wrong input!!!");
-        exit(1);
+        rl.close();
+      }
+
+      if (all_guess.length == 10) {
+        console.log("Sorry! You exhausted all your tries.");
+        console.log(`The correct number was: ${number}`);
+        console.log("Your guesses:", all_guess);
+        rl.close();
       }
     });
   };
